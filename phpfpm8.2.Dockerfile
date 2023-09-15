@@ -1,10 +1,10 @@
-FROM harryxu/phpfpm:7.4
+FROM harryxu/phpfpm:8.2-bookworm
 
 ENV ACCEPT_EULA=Y
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends zsh
-RUN curl -fsSL https://starship.rs/install.sh | sh -s -- -y
+RUN apt-get update 
+RUN apt-get install -y --no-install-recommends zsh \
+    && curl -fsSL https://starship.rs/install.sh | sh -s -- -y
 
 WORKDIR /var/www
 

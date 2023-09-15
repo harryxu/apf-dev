@@ -1,4 +1,3 @@
-services:
 
-  php-fpm:
-    user: www-data:www-data
+include:
+  - phpfpm8.2.docker-compose.yml
