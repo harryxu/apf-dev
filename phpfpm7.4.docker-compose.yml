@@ -1,6 +1,6 @@
 services:
 
-  php-fpm:
+  php-fpm74:
     build:
       context: .
       dockerfile: phpfpm7.4.Dockerfile
@@ -16,12 +16,12 @@ services:
     networks:
       - app-network
 
-  httpd:
+  httpd74:
     image: httpd:alpine
     volumes:
       - ${LOCAL_DIR}:/var/www/
       - ./apache2/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
-      - ./apache2/conf/sites/:/usr/local/apache2/conf/sites/
+      - ./apache2/conf/sites/vhosts74.conf/:/usr/local/apache2/conf/sites/vhosts74.conf
     ports:
       - 9074:80
 

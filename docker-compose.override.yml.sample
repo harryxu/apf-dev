@@ -1,3 +1,4 @@
-
 include:
-  - phpfpm8.2.docker-compose.yml
+  # Uncomment lines below to enable specified versions of php server.
+  # - phpfpm7.4.docker-compose.yml # port 9074
+  # - phpfpm8.2.docker-compose.yml # port 9082

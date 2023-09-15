@@ -1,6 +1,6 @@
 services:
 
-  php-fpm:
+  php-fpm82:
     build:
       context: .
       dockerfile: phpfpm8.2.Dockerfile
@@ -16,12 +16,12 @@ services:
     networks:
       - app-network82
 
-  httpd:
+  httpd82:
     image: httpd:alpine
     volumes:
       - ${LOCAL_DIR}:/var/www/
       - ./apache2/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
-      - ./apache2/conf/sites/:/usr/local/apache2/conf/sites/
+      - ./apache2/conf/sites/vhosts82.conf/:/usr/local/apache2/conf/sites/vhosts82.conf
     ports:
       - 9082:80
 
