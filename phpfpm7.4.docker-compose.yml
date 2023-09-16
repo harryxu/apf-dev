@@ -7,7 +7,6 @@ services:
     user: www-data:www-data
     volumes:
       - ${LOCAL_DIR}:/var/www/
-      - ./php.ini:/usr/local/etc/php/php.ini
       - ./php-fpm/log/:/var/log/fpm-php/
       - ./.config:/root/.config
       - ./.config/.zshrc:/root/.zshrc

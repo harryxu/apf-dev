@@ -1,9 +1,9 @@
 services:
 
-  php-fpm82:
+  php-fpm56:
     build:
       context: .
-      dockerfile: phpfpm8.2.Dockerfile
+      dockerfile: phpfpm5.6.Dockerfile
     user: www-data:www-data
     volumes:
       - ${LOCAL_DIR}:/var/www/
@@ -13,20 +13,20 @@ services:
       - ./.config:/var/www/.config
       - ./.config/.zshrc:/var/www/.zshrc
     networks:
-      - app-network82
+      - app-network56
 
-  httpd82:
+  httpd56:
     image: httpd:alpine
     volumes:
       - ${LOCAL_DIR}:/var/www/
       - ./apache2/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
-      - ./apache2/conf/sites/vhosts82.conf/:/usr/local/apache2/conf/sites/vhosts82.conf
+      - ./apache2/conf/sites/vhosts56.conf/:/usr/local/apache2/conf/sites/vhosts56.conf
     ports:
-      - 9082:80
+      - 9056:80
 
     networks:
-      - app-network82
+      - app-network56
 
 networks:
-  app-network82:
+  app-network56:
     driver: bridge
