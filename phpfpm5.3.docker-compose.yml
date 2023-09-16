@@ -1,0 +1,29 @@
+services:
+
+  php-fpm53:
+    image: devilbox/php-fpm-5.3:latest
+    user: www-data:www-data
+    volumes:
+      - ${LOCAL_DIR}:/var/www/
+      # - ./.config:/root/.config
+      # - ./.config/.zshrc:/root/.zshrc
+      # - ./.config:/var/www/.config
+      # - ./.config/.zshrc:/var/www/.zshrc
+    networks:
+      - app-network53
+
+  httpd53:
+    image: httpd:alpine
+    volumes:
+      - ${LOCAL_DIR}:/var/www/
+      - ./apache2/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./apache2/conf/sites/vhosts53.conf/:/usr/local/apache2/conf/sites/vhosts53.conf
+    ports:
+      - 9053:80
+
+    networks:
+      - app-network53
+
+networks:
+  app-network53:
+    driver: bridge
