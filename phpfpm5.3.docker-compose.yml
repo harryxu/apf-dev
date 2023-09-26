@@ -1,8 +1,7 @@
 services:
 
   php-fpm53:
-    image: devilbox/php-fpm-5.3:latest
-    user: www-data:www-data
+    image: devilbox/php-fpm:5.3-prod
     volumes:
       - ${LOCAL_DIR}:/var/www/
       # - ./.config:/root/.config
