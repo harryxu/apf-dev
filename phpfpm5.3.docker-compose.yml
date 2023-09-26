@@ -1,7 +1,9 @@
 services:
 
   php-fpm53:
-    image: devilbox/php-fpm:5.3-prod
+    build:
+      context: .
+      dockerfile: phpfpm5.3.Dockerfile
     volumes:
       - ${LOCAL_DIR}:/var/www/
       # - ./.config:/root/.config
