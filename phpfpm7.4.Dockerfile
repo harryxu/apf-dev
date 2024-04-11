@@ -8,6 +8,8 @@ RUN apt-get install -y --no-install-recommends zsh \
 
 WORKDIR /var/www
 
+RUN chsh -s /bin/bash www-data && usermod -c "umask=002" www-data
+
 ### The uopz extension is focused on providing utilities to aid with unit testing PHP code.
 ### Required by packages like ClockMock. https://github.com/slope-it/clock-mock
 # RUN pecl install -o -f uopz-6.1.2 \

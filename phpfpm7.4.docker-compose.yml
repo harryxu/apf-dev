@@ -11,7 +11,7 @@ services:
       - ./.config:/root/.config
       - ./.config/.zshrc:/root/.zshrc
       - ./.config:/var/www/.config
-      - ./.config/.zshrc:/var/www/.zshrc
+      - ./.config/.bashrc:/var/www/.bashrc
     networks:
       - app-network
 
