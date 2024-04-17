@@ -2,8 +2,8 @@ FROM harryxu/phpfpm:7.4
 
 ENV ACCEPT_EULA=Y
 
-RUN apt-get update 
-RUN apt-get install -y --no-install-recommends zsh git \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends zsh git \
     && curl -fsSL https://starship.rs/install.sh | sh -s -- -y
 
 WORKDIR /var/www
