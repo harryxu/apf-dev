@@ -1,0 +1,32 @@
+services:
+
+  php-fpm80:
+    build:
+      context: ./docker-php8.0/
+      dockerfile: Dockerfile
+    user: www-data:www-data
+    volumes:
+      - ${LOCAL_DIR}:/var/www/
+      - ./php-fpm/log/:/var/log/fpm-php/
+      - ./.config:/root/.config
+      - ./.config/.zshrc:/root/.zshrc
+      - ./.config:/var/www/.config
+      - ./.config/.bashrc:/var/www/.bashrc
+    networks:
+      - app-network80
+
+  httpd80:
+    image: httpd:alpine
+    volumes:
+      - ${LOCAL_DIR}:/var/www/
+      - ./apache2/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./apache2/conf/sites/vhosts80.conf/:/usr/local/apache2/conf/sites/vhosts80.conf
+    ports:
+      - 9080:80
+
+    networks:
+      - app-network80
+
+networks:
+  app-network80:
+    driver: bridge
