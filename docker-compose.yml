@@ -1,2 +1,2 @@
 include:
-  - phpfpm7.4.docker-compose.yml
+  - phpfpm8.2.docker-compose.yml

@@ -42,10 +42,12 @@ RUN pecl install -o -f redis \
     &&  rm -rf /tmp/pear \
     &&  docker-php-ext-enable redis
 
-### xmlrpc
-RUN pecl install -o -f xmlrpc \
-    &&  rm -rf /tmp/pear \
-    &&  docker-php-ext-enable xmlrpc
+### xml ext
+#RUN pecl install -o -f xmlrpc \
+#    &&  rm -rf /tmp/pear \
+#    &&  docker-php-ext-enable xmlrpc
+RUN docker-php-ext-install xml
+
 
 ## imagick
 RUN apt-get -y install libmagickwand-dev --no-install-recommends \
