@@ -1,6 +1,9 @@
-FROM harryxu/phpfpm:8.2-bookworm
+FROM php:8.2-fpm-bookworm
 
 ENV ACCEPT_EULA=Y
+
+ADD ./sources.list /etc/apt/sources.list
+
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends zsh git \
@@ -10,18 +13,57 @@ WORKDIR /var/www
 
 RUN chsh -s /bin/bash www-data && usermod -c "umask=002" www-data
 
-### The uopz extension is focused on providing utilities to aid with unit testing PHP code.
-### Required by packages like ClockMock. https://github.com/slope-it/clock-mock
-# RUN pecl install -o -f uopz-6.1.2 \
-#     &&  docker-php-ext-enable uopz
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends \
+        git-all \
+        openssh-client \
+        curl \
+        gnupg \
+        libz-dev \
+        libzip-dev \
+        libpq-dev \
+        libssl-dev \
+        libmcrypt-dev \
+        libxml2-dev \
+        apt-transport-https \
+        ffmpeg \
+        jpegoptim optipng pngquant
 
-### Microsoft Drivers for PHP for SQL Server
-### https://docs.microsoft.com/en-us/sql/connect/php/microsoft-php-driver-for-sql-server?view=sql-server-2017
-# RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-# RUN curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list
+### Common ext
+RUN docker-php-ext-install -j$(nproc) \
+        mysqli \
+        zip \
+        pdo_mysql \
+        bcmath \
+        exif \
+        soap
 
-# RUN apt-get update
-# RUN apt-get install -y --no-install-recommends  msodbcsql17 unixodbc-dev
+### iconv and gd extensions
+RUN apt-get update && apt-get install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd
 
-# RUN pecl install sqlsrv pdo_sqlsrv \
-#     && docker-php-ext-enable sqlsrv pdo_sqlsrv
+### redis
+RUN pecl install -o -f redis \
+    &&  rm -rf /tmp/pear \
+    &&  docker-php-ext-enable redis
+
+### xmlrpc
+RUN pecl install -o -f xmlrpc \
+    &&  rm -rf /tmp/pear \
+    &&  docker-php-ext-enable xmlrpc
+
+## imagick
+RUN apt-get -y install libmagickwand-dev --no-install-recommends \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick
+
+## exif
+RUN docker-php-ext-install exif \
+    && docker-php-ext-configure exif --enable-exif
+
+## composer
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
