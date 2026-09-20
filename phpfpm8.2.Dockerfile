@@ -3,7 +3,7 @@ FROM php:8.2-fpm-bookworm
 ENV ACCEPT_EULA=Y
 ENV DEBIAN_FRONTEND=noninteractive
 
-COPY ./sources.list /etc/apt/sources.list
+COPY ./bookworm.sources.list /etc/apt/sources.list
 
 RUN set -eux; \
     apt-get update; \
