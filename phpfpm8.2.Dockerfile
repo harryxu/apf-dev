@@ -34,6 +34,8 @@ RUN docker-php-ext-install -j$(nproc) \
         mysqli \
         zip \
         pdo_mysql \
+        pdo_pgsql \
+        pgsql \
         bcmath \
         exif \
         soap
